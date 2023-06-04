@@ -1,0 +1,14 @@
+void preorder(TreeNode* root,vector<int>&res){
+    if(!root) return;
+    res.push_back(root->data);
+    preorder(root->left,res);
+    preorder(root->right,res);
+    
+}
+vector<int> getPreOrderTraversal(TreeNode *root)
+{
+    // Write your code here.
+    vector<int>res;
+    preorder(root,res);
+    return res;
+}
