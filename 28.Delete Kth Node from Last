@@ -1,0 +1,21 @@
+Node* removeKthNode(Node* head, int K)
+{
+    // Write your code here.
+    
+    Node* dummy=new Node();
+    dummy->next=head;
+    Node* fast=dummy;
+    Node* slow=dummy;
+    Node* temp=nullptr;
+    for(int i=1;i<=K;i++){
+        fast=fast->next;
+    }
+    while(fast && fast->next){
+        temp=slow;
+        fast=fast->next;
+        slow=slow->next;
+    }
+    if(temp==nullptr) return head->next;
+    slow->next=slow->next->next;
+    return head;
+}
