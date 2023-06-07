@@ -1,0 +1,32 @@
+LinkedListNode<int> *cloneRandomList(LinkedListNode<int> *head)
+{   if(head==nullptr) return head;
+    LinkedListNode<int>* temp=head;
+    while(temp){
+        LinkedListNode<int>* newNode=new LinkedListNode<int>(temp->data);
+        newNode->next=temp->next;
+        temp->next=newNode;
+        temp=temp->next->next;
+    }
+
+    LinkedListNode<int>* iter=head;
+    while(iter){
+        if(iter->random){
+            iter->next->random=iter->random->next;
+        }
+        iter=iter->next->next;
+    }
+    LinkedListNode<int>* dummy=new LinkedListNode<int>(0);
+    temp=dummy;
+    LinkedListNode<int>* fast=dummy;
+    iter=head;
+    while(iter){
+        fast=iter->next->next;
+        temp->next=iter->next;
+        iter->next=fast;
+        temp=temp->next;
+        iter=fast;
+    }
+    return dummy->next;
+    
+
+}
