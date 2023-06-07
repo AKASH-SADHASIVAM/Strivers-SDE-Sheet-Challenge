@@ -1,0 +1,25 @@
+#include <bits/stdc++.h> 
+long getTrappedWater(long *arr, int n){
+    // Write your code here.
+    long left_max=arr[0];
+    long right_max=arr[n-1];
+    int left=0;
+    int right=n-2;
+    long sum=0;
+    while(left<=right){
+        int mini=min(left_max,right_max);
+        if(mini==left_max){
+            int temp_sum=mini-arr[left];
+            if(temp_sum>0) sum=sum+temp_sum;
+            else left_max=arr[left];
+            left++;
+        }
+        else{
+            int temp_sum=mini-arr[right];
+            if(temp_sum>0) sum=sum+temp_sum;
+            else right_max=arr[right];
+            right--;
+        }
+    }
+    return sum;
+}
