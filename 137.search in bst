@@ -1,0 +1,11 @@
+bool searchInBST(BinaryTreeNode<int> *root, int x) {
+    // Write your code here.
+    BinaryTreeNode<int>* curr=root;
+    while(curr){
+        if(curr->data==x) return true;
+        if(curr->data>x){
+            curr=curr->left;
+        }
+        else curr=curr->right;
+    } return false;
+}
