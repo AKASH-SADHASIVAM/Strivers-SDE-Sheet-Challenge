@@ -1,0 +1,18 @@
+#include <bits/stdc++.h> 
+
+void subset_sum(vector<int>&nums,int idx,int sum,vector<int>&v){
+    if(idx==nums.size()){
+    v.push_back(sum);
+      return; 
+    }
+    subset_sum(nums,idx+1,sum+nums[idx],v);
+    subset_sum(nums,idx+1,sum,v);
+}
+vector<int> subsetSum(vector<int> &num)
+{
+    // Write your code here.
+    vector<int>v;
+    subset_sum(num,0,0,v);
+    sort(v.begin(),v.end());
+    return v;
+}
