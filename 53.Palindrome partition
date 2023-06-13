@@ -1,0 +1,31 @@
+#include <bits/stdc++.h> 
+bool ispalin(string s){
+    string t=s;
+    reverse(s.begin(),s.end());
+    return s==t;
+}
+void solve(string s,vector<string>&ds,vector<vector<string>>&v){
+    if(s.size()==0){
+        v.push_back(ds);
+        return;
+    }
+    for(int i=1;i<=s.size();i++){
+       string x=s.substr(0,i);
+       if(ispalin(x)){
+           ds.push_back(x);
+           solve(s.substr(i,s.size()-1),ds,v);
+           ds.pop_back();
+       }
+    }
+}
+
+
+
+vector<vector<string>> partition(string &s) 
+{
+    // Write your code here.
+    vector<vector<string>>v;
+    vector<string>ds;
+    solve(s,ds,v);
+    return v;       
+}
