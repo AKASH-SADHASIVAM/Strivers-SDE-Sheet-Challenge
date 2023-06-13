@@ -1,0 +1,26 @@
+
+#include<bits/stdc++.h>
+void solve(vector<int>arr,int idx,int target,
+vector<int>&ds,vector<vector<int>>&v){
+		if(target==0){
+			v.push_back(ds);
+			return;
+		}
+	for(int i=idx;i<arr.size();i++){
+		if(i!=idx && arr[i]==arr[i-1]) continue;
+		if(arr[i]>target) break;
+		ds.push_back(arr[i]);
+		solve(arr,i+1,target-arr[i],ds,v);
+		ds.pop_back();
+	}
+}
+
+vector<vector<int>> combinationSum2(vector<int> &arr, int n, int target)
+{
+	// Write your code here.
+	vector<vector<int>>v;
+	vector<int>ds;
+	std::sort(arr.begin(),arr.end());
+	solve(arr,0,target,ds,v);
+	return v;
+}
