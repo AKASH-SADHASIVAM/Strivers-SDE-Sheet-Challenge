@@ -1,0 +1,49 @@
+#include <bits/stdc++.h> 
+class Queue {
+    int* dat;
+    int count;
+    int ft;
+    int rr;
+    int capacity;
+public:
+    Queue() {
+        // Implement the Constructor
+        capacity=1000;
+        dat=new int[1000];
+        count=0;
+        ft=0;
+        rr=0;
+        
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        // Implement the isEmpty() function
+        return count==0;
+    }
+
+    void enqueue(int data) {
+        // Implement the enqueue() function
+         if(count>=capacity) return;
+         dat[rr%capacity]=data;
+         count++;
+         rr++;
+    }
+
+    int dequeue() {
+        // Implement the dequeue() function
+        if(count==0) return -1;
+        int val=dat[ft%capacity];
+        dat[ft%capacity]=-1;
+        count--;
+        ft++;
+        return val;
+    }
+
+    int front() {
+        // Implement the front() function
+        if(count==0) return -1;
+        return dat[ft%capacity];
+    }
+};
