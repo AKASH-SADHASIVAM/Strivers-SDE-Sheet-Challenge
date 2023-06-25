@@ -1,0 +1,119 @@
+#include <bits/stdc++.h> 
+#include<map>
+struct Node{
+    int key;
+    int val;
+    int cnt;
+    Node* prev;
+    Node* next;
+    Node(int _key,int _val){
+        key=_key;
+        val=_val;
+        cnt=1;
+        prev=nullptr;
+        next=nullptr;
+
+    }
+};
+struct List{
+    int size=0;
+    Node* head;
+    Node* tail;
+     List(){
+         head=new Node(-1,-1);
+         tail=new Node(-1,-1);
+         size=0;
+         head->next=tail;
+         tail->prev=head;
+     }
+     void insertNode(Node* node){
+         Node* temp=head->next;
+         node->prev=head;
+         node->next=temp;
+         head->next=node;
+         temp->prev=node;
+         size++;
+     }
+     void deleteNode(Node* node){
+        Node* delprev=node->prev;
+        Node* delnext=node->next;
+        delprev->next=delnext;
+        delnext->prev=delprev;
+        size--;
+     }
+};
+class LFUCache
+{
+
+    int cap;
+    map<int,Node*>keynode;
+    map<int,List*>freqListMap;
+    int minfreq;
+    int cursize;
+public:
+    LFUCache(int capacity)
+    {
+        // Write your code here.
+        cap=capacity;
+        minfreq=0;
+        cursize=0;
+    }
+    void updateNode(Node* node){
+        keynode.erase(node->key);
+        freqListMap[node->cnt]->deleteNode(node);
+
+        if(node->cnt==minfreq && freqListMap[node->cnt]->size==0){
+            minfreq++;
+        }
+        List* list=new List();
+        if(freqListMap.find(node->cnt+1)!=freqListMap.end()){
+            list=freqListMap[node->cnt+1];
+        }
+        node->cnt=node->cnt+1;
+        list->insertNode(node);
+        freqListMap[node->cnt]=list;
+        keynode[node->key]=node;
+
+    }
+    int get(int key)
+    {
+        // Write your code here.
+        if(keynode.find(key)!=keynode.end()){
+            Node* existingNode=keynode[key];
+            int v=existingNode->val;
+            updateNode(existingNode);
+            return v;
+        }
+        return -1;
+    }
+
+    void put(int key, int value)
+    {
+        // Write your code here.
+        if(cap==0) return;
+        if(keynode.find(key)!=keynode.end()){
+            Node* existingNode=keynode[key];
+            existingNode->val=value;
+            updateNode(existingNode);
+        }
+        else{
+            if(cap==cursize){
+                List* list=freqListMap[minfreq];
+                keynode.erase(list->tail->prev->key);
+                freqListMap[minfreq]->deleteNode(list->tail->prev);
+                cursize--;
+            }
+            cursize++;
+            minfreq=1;
+            List* list=new List();
+            if(keynode.find(minfreq)!=keynode.end()){
+                list=freqListMap[minfreq];
+            }
+            Node* node=new Node(key,value);
+            list->insertNode(node);
+            freqListMap[minfreq]=list;
+            keynode[key]=node;
+
+        }
+    }
+};
