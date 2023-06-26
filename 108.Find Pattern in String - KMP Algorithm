@@ -1,0 +1,6 @@
+#include <bits/stdc++.h> 
+bool findPattern(string s2, string s1)
+{
+    // Write your code here.
+   return s1.find(s2) != string::npos;
+}
