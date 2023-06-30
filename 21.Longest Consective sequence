@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        
+        unordered_set<int> st(nums.begin(), nums.end());
+        int maxi = 1;
+        
+        for(int i = 0; i < nums.size(); i++) {
+            if(st.find(nums[i] - 1) == st.end()) { // check if the current number is the starting point of a consecutive sequence
+                int count = 1;
+                int curr = nums[i];
+                
+                while(st.find(curr + 1) != st.end()) { // check consecutive numbers in the set
+                    count++;
+                    curr = curr + 1;
+                }
+                
+                maxi = max(maxi, count);
+            }
+        }
+        
+        return maxi;
+    }
+};
