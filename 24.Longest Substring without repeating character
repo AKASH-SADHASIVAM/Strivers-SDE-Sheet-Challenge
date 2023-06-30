@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string s)
+{
+    //Write your code here
+    int maxi=0;
+    int left=0;
+    int right=0;
+    set<char>st;
+    while(right<s.size()){
+        if(st.find(s[right])==st.end()){
+            st.insert(s[right]);
+            maxi=max(maxi,right-left+1);
+            right++;
+        } else st.erase(s[left++]);
+    }
+    return maxi;
+}
