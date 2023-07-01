@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+
+ void merge(vector<int>&arr,int low,int mid,int high){
+        vector<int>temp;
+        int left=low;
+        int right=mid+1;
+        while(left<=mid && right<=high){
+            if(arr[left]<=arr[right]){
+                temp.push_back(arr[left++]);
+
+            }else temp.push_back(arr[right++]);
+        }
+        while(left<=mid) temp.push_back(arr[left++]);
+        while(right<=high) temp.push_back(arr[right++]);
+        for(int i=low;i<=high;i++){
+            arr[i]=temp[i-low];
+        }
+    }
+
+ int countpairs(vector<int>&nums,int low,int mid,int high){
+        int count=0;
+        int right=mid+1;
+        for(int i=low;i<=mid;i++){
+            while(right<=high && nums[i]>2LL*nums[right]) right++;
+            count=count+(right-(mid+1));
+        }
+        return count;
+    }
+ int mergesort(vector<int>&nums,int low,int high){
+        int count=0;
+        if(low>=high) return count;
+        int mid=(low+high)/2;
+        count=count+mergesort(nums,low,mid);
+        count=count+mergesort(nums,mid+1,high);
+        count=count+countpairs(nums,low,mid,high);
+        merge(nums,low,mid,high);
+        return count;
+    }
+int reversePairs(vector<int>& nums,int n) {
+         return mergesort(nums,0,nums.size()-1);
+        
+        
+        return 0;
+    }
