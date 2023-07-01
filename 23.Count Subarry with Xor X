@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+
+int subarraysXor(vector<int> &arr, int x)
+{
+    //    Write your code here.
+    int xr=0;
+    map<int,int>mp;
+    mp[xr]++;
+    int count=0;
+    for(int i=0;i<arr.size();i++){
+        xr=xr^arr[i];
+        count=count+mp[xr^x];
+        mp[xr]++;
+    }
+    return count;
+}
