@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct Item{
+    int value;
+    int weight;
+    double quan;
+};
+
+static bool comparison(Item a,Item b){
+    return a.quan>b.quan;
+}
+double maximumValue (vector<pair<int, int>>& items, int n, int w)
+{
+    // Write your code here.
+    // ITEMS contains {weight, value} pairs.
+    vector<Item>v;
+    for(int i=0;i<n;i++){
+        Item item;
+        item.weight=items[i].first;
+        item.value=items[i].second;
+        item.quan = (double)item.value / (double)item.weight;
+        
+        v.push_back(item);
+    }
+    sort(v.begin(),v.end(),comparison);
+    int currweight=0;
+    double total=0;
+    for(int i=0;i<v.size();i++){
+        if(currweight+v[i].weight<=w){
+            currweight=currweight+v[i].weight;
+            total=total+v[i].value;
+        }
+        else{
+            int remain=w-currweight;
+            total=total+(double) remain*(double)v[i].quan;
+            break;
+        }
+    }
+    return total;
+
+}
