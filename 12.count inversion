@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+
+long long merge(long long *arr,int low,int mid,int high){
+    int left=low;
+    int right=mid+1;
+    long long count=0;
+    vector<long long>temp;
+    while( left<=mid && right<=high){
+        if(arr[left]<=arr[right]){
+            temp.push_back(arr[left++]);
+        }
+        else{
+            count=count+(mid-left+1);
+            temp.push_back(arr[right++]);
+    }
+    }
+    while(left<=mid) temp.push_back(arr[left++]);
+        while(right<=high) temp.push_back(arr[right++]);
+
+    
+    for(int i=low;i<=high;i++){
+        arr[i]=temp[i-low];
+    }
+    return count;
+}
+long long mergesort(long long *arr,int low,int high){
+    long long count=0;
+    if(low>=high) return count;
+    int mid=(low+high)/2;
+    count =count+ mergesort(arr,low,mid);
+    count=count+mergesort(arr,mid+1,high);
+    count=count+merge(arr,low,mid,high);
+    return count;
+    
+}
+long long getInversions(long long *arr, int n){
+    // Write your code here.
+    return mergesort(arr,0,n-1);
+   
+}
