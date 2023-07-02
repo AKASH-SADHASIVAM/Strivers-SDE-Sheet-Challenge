@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+pair<int, int> missingAndRepeating(vector<int> &arr, int n)
+{
+    long long SN = (n * (n + 1)) / 2;
+    long long S2N = (n * (n + 1) * (2 * n + 1)) / 6;
+    long long s = 0, s2n = 0;
+    for (auto x : arr)
+    {
+        s += x;
+        s2n += ((long long)x * (long long)x);
+    }
+    long long val1 = s - SN;
+    long long val2 = (s2n - S2N) / val1; // Corrected calculation
+    long long x = (val1 + val2) / 2;
+    long long y = x - val2;
+    return {(int)x, (int)y};
+}
