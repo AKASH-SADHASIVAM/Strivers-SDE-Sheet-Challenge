@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct Item{
+    int start;
+    int end;
+};
+static bool comparison(Item a,Item b){
+    return a.end<b.end;
+}
+int maximumActivities(vector<int> &start, vector<int> &finish) {
+    // Write your code here.
+    vector<Item>v;
+    for(int i=0;i<start.size();i++){
+        Item item;
+        item.start=start[i];
+        item.end=finish[i];
+        v.push_back(item);
+        
+    }
+    sort(v.begin(),v.end(),comparison);
+    int count=1;
+    int last=v[0].end;
+    for(int i=1;i<v.size();i++){
+        if(v[i].start>=last){
+            count++;
+            last=v[i].end;
+        }
+    }
+    return count;
+
+}
