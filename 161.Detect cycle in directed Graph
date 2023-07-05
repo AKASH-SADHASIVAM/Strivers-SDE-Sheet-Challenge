@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool dfs(int node,vector<int>&visit,vector<int>&dfsvisit,map<int,vector<int>>adj){
+  visit[node]=1;
+  dfsvisit[node]=1;
+  for(auto x:adj[node]){
+    if(!visit[x]){
+      if(dfs(x,visit,dfsvisit,adj)==true) return true;
+    }
+    else if(dfsvisit[x]) return true;
+  }
+  return false;
+}
+
+
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+  
+  // Write your code here.
+  vector<int>visit(n+1,0);
+  vector<int>dfsvisit(n+1,0);
+  map<int,vector<int>>adj;
+  for(int i=0;i<edges.size();i++){
+      adj[edges[i].first].push_back(edges[i].second);
+  }
+  for(int i=1;i<=n;i++){
+    if(!visit[i]){
+       if(dfs(i,visit,dfsvisit,adj)==true) return 1;
+    }
+  }
+  return 0;
+}
