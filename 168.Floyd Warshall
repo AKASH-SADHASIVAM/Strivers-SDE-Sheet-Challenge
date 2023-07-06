@@ -1,0 +1,26 @@
+int floydWarshall(int n, int m, int src, int dest, vector<vector<int>> &edges) {
+    // Write your code here.
+    vector<vector<int>>adj(n,vector<int>(n,0));
+    for(auto&x:edges){
+        int u = x[0]-1;
+        int v = x[1]-1;
+        int w = x[2];
+        adj[u][v]=w;
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(adj[i][j]==0 && i!=j){
+                adj[i][j] = INT_MAX;
+            }
+        }
+    }
+    for(int k=0;k<n;k++){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(adj[i][k]==INT_MAX || adj[k][j]==INT_MAX || adj[i][k] +adj[k][j]==INT_MAX)continue;
+                    adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
+            }
+        }
+    }
+    return (adj[src-1][dest-1] == INT_MAX) ?1e9:adj[src-1][dest-1];
+}
