@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+void dfs(int node,vector<int>&visit,stack<int>&st,map<int,vector<int>>&mp){
+    visit[node]=1;
+    
+    for(auto x:mp[node]){
+        if(!visit[x]){
+            dfs(x,visit,st,mp);
+        }
+    }
+    st.push(node);
+
+}
+
+void dfs1(int node,vector<int>&vis,map<int,vector<int>>&adj,vector<int>&v){
+    vis[node]=1;
+    v.push_back(node);
+    for(auto x:adj[node]){
+        if(!vis[x]){
+            dfs1(x,vis,adj,v);
+        }
+    }
+
+}
+vector<vector<int>> stronglyConnectedComponents(int n, vector<vector<int>> &edges)
+{
+    // Write your code here.
+    vector<vector<int>>res;
+    map<int,vector<int>>mp;
+    for(int i=0;i<edges.size();i++){
+        mp[edges[i][0]].push_back(edges[i][1]);
+    }
+    vector<int>visit(n,0);
+    stack<int>st;
+    for(int i=0;i<n;i++){
+        if(!visit[i]){
+            dfs(i,visit,st,mp);
+        }
+    }
+    map<int,vector<int>>adj;
+    for(int i=0;i<edges.size();i++){
+        adj[edges[i][1]].push_back(edges[i][0]);
+    }
+    vector<int>vis(n,0);
+    int src=0;
+    while(!st.empty()){
+        int x=st.top();
+        st.pop();
+        
+       
+            if(!vis[x]){
+                src++;
+                vector<int>v;
+                dfs1(x,vis,adj,v);
+                res.push_back(v);
+                
+            
+        }
+    }
+    return res;
+}
