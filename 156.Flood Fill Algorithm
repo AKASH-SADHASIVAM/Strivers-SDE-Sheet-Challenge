@@ -1,0 +1,17 @@
+void solve(vector<vector<int>>& image, int x, int y, int newColor, int num) {
+    int m = image.size();
+    int n = image[0].size();
+    if (x < 0 || y < 0 || x >= m || y >= n || image[x][y] != num) return;
+    image[x][y] = newColor;
+    solve(image, x, y + 1, newColor, num);
+    solve(image, x + 1, y, newColor, num);
+    solve(image, x, y - 1, newColor, num);
+    solve(image, x - 1, y, newColor, num);
+}
+
+vector<vector<int>> floodFill(vector<vector<int>>& image, int x, int y, int newColor) {
+    if(newColor==image[x][y]) return image;
+    int num = image[x][y];
+    solve(image, x, y, newColor, num);
+    return image;
+}
