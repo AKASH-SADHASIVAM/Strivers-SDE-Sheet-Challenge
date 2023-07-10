@@ -1,0 +1,16 @@
+void floor(TreeNode<int>* root,int &maxi,int x){
+    if(!root) return;
+    if(root->val<=x && maxi<root->val){
+        maxi=root->val;
+    }
+    floor(root->left,maxi,x);
+    floor(root->right,maxi,x);
+}
+int floorInBST(TreeNode<int> * root, int X)
+{
+    // Write your code here.
+    int maxi=INT_MIN;
+    floor(root,maxi,X);
+    return maxi;
+
+}
