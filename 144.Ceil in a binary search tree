@@ -1,0 +1,15 @@
+void ceil(BinaryTreeNode<int>* root,int &mini,int x){
+    if(!root) return;
+    if(root->data>=x && mini>root->data){
+        mini=root->data;
+    }
+    ceil(root->left,mini,x);
+    ceil(root->right,mini,x);
+}
+int findCeil(BinaryTreeNode<int> *node, int x){
+    // Write your code here.
+    int mini=INT_MAX;
+    ceil(node,mini,x);
+    if(mini==INT_MAX) return -1;
+    return mini;
+}
