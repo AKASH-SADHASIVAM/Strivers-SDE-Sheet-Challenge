@@ -1,0 +1,55 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the Binary Tree node structure
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+class NodeValue{
+    public:
+    int maxNode;
+    int minNode;
+    int maxsize;
+    NodeValue(int minNode,int maxNode,int maxsize){
+        this->maxNode=maxNode;
+        this->minNode=minNode;
+        this->maxsize=maxsize;
+    }
+};
+ NodeValue bst(TreeNode<int>* root){
+     if(!root) return NodeValue(INT_MAX,INT_MIN,0);
+     auto left=bst(root->left);
+     auto right=bst(root->right);
+     if(left.maxNode<root->data && right.minNode>root->data){
+         return NodeValue(min(left.minNode,root->data),max(right.maxNode,root->data),
+         left.maxsize+right.maxsize+1);
+     }
+     return NodeValue(INT_MIN,INT_MAX,max(left.maxsize,right.maxsize));
+ }
+int largestBST(TreeNode<int>* root) 
+{
+    // Write your code here.
+    return bst(root).maxsize;
+    
+
+}
