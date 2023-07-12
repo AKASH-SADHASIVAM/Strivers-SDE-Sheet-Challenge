@@ -1,0 +1,54 @@
+
+string serializeTree(TreeNode<int> *root)
+{
+ //    Write your code here for serializing the tree
+    if(!root) return "";
+    string str="";
+    queue<TreeNode<int>*>q;
+    q.push(root);
+    while(!q.empty()){
+        TreeNode<int>* curr=q.front();
+        q.pop();
+        if(curr==nullptr) str=str+"#,";
+        else str=str+to_string(curr->data)+',';
+        if(curr!=nullptr){
+            q.push(curr->left);
+            q.push(curr->right);
+        }
+    }
+    return str;
+
+}
+
+TreeNode<int>* deserializeTree(string &str)
+{
+ //    Write your code here for deserializing the tree
+     if(str.size()==0) return nullptr;
+     stringstream ss(str);
+     string s;
+     getline(ss,s,',');
+     TreeNode<int>* root=new  TreeNode<int>(stoi(s));
+     queue<TreeNode<int>*>q;
+     q.push(root);
+     while(!q.empty()){
+         TreeNode<int>* curr=q.front();
+         q.pop();
+         getline(ss,s,',');
+         if(s=="#") curr->left=nullptr;
+         else{
+             TreeNode<int>* temp=new  TreeNode<int>(stoi(s));
+             curr->left=temp;
+             q.push(temp);
+         }
+         getline(ss,s,',');
+         if(s=="#") curr->right=nullptr;
+         else{
+             TreeNode<int>* temp=new  TreeNode<int>(stoi(s));
+             curr->right=temp;
+              q.push(temp);
+         }
+     }
+     return root;
+
+}
+
