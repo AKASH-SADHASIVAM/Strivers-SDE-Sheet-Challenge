@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+void sorted(vector<int>&v1,vector<int>&v2){
+    vector<int>dummy;
+    int i=0,j=0;
+    int m=v1.size();
+    int n=v2.size();
+    while(i<m && j<n){
+        if(v1[i]<v2[j]){
+            dummy.push_back(v1[i++]);
+            
+        }
+        else{
+            dummy.push_back(v2[j++]);
+        }
+    }
+    while(i<m) dummy.push_back(v1[i++]);
+    while(j<n) dummy.push_back(v2[j++]);
+
+    v1.clear();
+    for(auto x:dummy){
+        v1.push_back(x);
+    }
+}
+vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays, int k)
+{
+    // Write your code here.
+    vector<int>res;
+    vector<int>temp;
+    for(int i=0;i<kArrays.size();i++){
+        sorted(temp,kArrays[i]); 
+    }
+    return temp;
+}
