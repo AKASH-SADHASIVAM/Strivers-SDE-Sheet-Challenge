@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+void sett(int idx,int n,vector<int>&v,vector<int>&ds,vector<vector<int>>&res){
+    if(idx==n){
+        res.push_back(ds);
+        return;
+    }
+    ds.push_back(v[idx]);
+    sett(idx+1,n,v,ds,res);
+    ds.pop_back();
+    sett(idx+1,n,v,ds,res);
+    
+
+
+
+}
+vector<vector<int>> pwset(vector<int>v)
+{
+    //Write your code here
+    vector<vector<int>>res;
+    vector<int>ds;
+    int n=v.size();
+    sett(0,n,v,ds,res);
+    return res;
+
+}
